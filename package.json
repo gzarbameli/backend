@@ -1,0 +1,25 @@
+{
+  "name": "cloud-computing-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "<giacomo.zarba@immobiliare.it>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^5.0.1",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.18"
+  },
+  "scripts": {
+    "frontend": "cd frontend && yarn start",
+    "backend": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn backend\" \"yarn frontend\""
+  }
+}
