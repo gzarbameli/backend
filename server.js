@@ -9,7 +9,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get("/home", cors(), async (request,response) => {
-    response.send("STRING FROM THE SERVER!");
+    response.send("STRING FROM THE SERVER!!!");
 })
 
 app.post("/store-data", (request,response) => {
