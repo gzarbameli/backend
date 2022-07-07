@@ -29,6 +29,7 @@ app.post("/post_name", async (request, response) => {
 })
 
 app.use('/login', (req, res) => {
+    console.log(req.body)
     res.send({
         token: 'test123'
     });
