@@ -8,11 +8,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 
-app.get("/home", cors(), async (request,response) => {
+app.get("/home", cors(), async (request, response) => {
     response.send("STRING FROM THE SERVER!!!");
 })
 
-app.post("/store-data", (request,response) => {
+app.post("/store-data", (request, response) => {
     let body = '';
     request.on('data', chunk => {
         body += chunk.toString(); // convert Buffer to string
@@ -24,9 +24,15 @@ app.post("/store-data", (request,response) => {
 })
 
 app.post("/post_name", async (request, response) => {
-	let { name } = request.body
-	console.log(name)
+    let { name } = request.body
+    console.log(name)
 })
+
+app.use('/login', (req, res) => {
+    res.send({
+        token: 'test123'
+    });
+});
 
 app.listen(port, "0.0.0.0", () => {
     console.log("Server Started...")
