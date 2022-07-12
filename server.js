@@ -33,7 +33,36 @@ connection.connect(function (err) {
 
     console.log('Connected to database.');
 });
-//-------------------------------------------------
+/*
+connection.query('SHOW TABLES', function (error, results, fields) {
+    if (error) throw error;
+        console.log(results);
+       });
+
+
+
+connection.query('CREATE TABLE IF NOT EXISTS reservations (idreservation INT NOT NULL AUTO_INCREMENT,matricula INT NOT NULL, date DATE NOT NULL, starting_time TIME(0) NOT NULL, ending_time TIME(0) NOT NULL, idclassroom INT NOT NULL, PRIMARY KEY (idreservation), FOREIGN KEY (matricula) REFERENCES student(matricula), FOREIGN KEY (idclassroom) REFERENCES classroom(idclassroom),CHECK(starting_time<ending_time))', function (error, results, fields) {
+    if (error) throw error;
+        console.log(results);
+       });/*
+
+       connection.query('CREATE TABLE IF NOT EXISTS student (matricula INT NOT NULL, name VARCHAR(20) NOT NULL,surname VARCHAR(20) NOT NULL, password VARCHAR(20) NOT NULL, PRIMARY KEY (matricula))', function (error, results, fields) {
+    if (error) throw error;
+            console.log(results);
+           });
+
+
+
+connection.query("INSERT INTO reservations (matricula,date,starting_time,ending_time,idclassroom) VALUES('198675','2022-11-23','10:00:00','11:00:00','6')", function (error, results, fields) {
+        if (error) throw error;
+            console.log(results);
+           });*/
+/*
+          connection.query('DROP TABLE reservations', function (error, results, fields) {
+            if (error) throw error;
+                console.log(results);
+               });*/
+       //-------------------------------------------------
 
 app.get("/home", cors(), async (request, response) => {
     response.send("STRING FROM THE SERVER!!!");
@@ -57,7 +86,7 @@ app.post("/post_name", async (request, response) => {
 
 app.use('/login', (request, response) => {
     // Capture the input fields
-    let matricula = request.body.matricula;
+    global.matricula = request.body.matricula;
     let password = request.body.password;
     // Ensure the input fields exists and are not empty
     if (matricula && password) {
@@ -74,9 +103,13 @@ app.use('/login', (request, response) => {
                 //response.redirect('/home');
                 console.log(results[0].matricula)
                 console.log("correct")
+                
                 response.send({
                     token: results[0].matricula
                 });
+
+
+
             } else {
                 //response.send('Incorrect Username and/or Password!');
                 console.log("incorrect")
@@ -95,6 +128,51 @@ app.use('/login', (request, response) => {
         token: 'test123'
     });*/
 });
+
+
+app.use('/book', (request, response) => {
+    // Capture the input fields
+    let classroom = request.body.classroom;
+    let date = request.body.date;
+    let time_s=request.body.time_s
+    let time_e=request.body.time_e
+
+    // Ensure the input fields exists and are not empty
+    if (classroom && date && time_s  && time_e) {
+
+        function get_info( callback){
+                    connection.query('SELECT idclassroom FROM classroom WHERE name= ?', classroom, function(err, results){
+                  if (err){ 
+                    throw err;
+                  }
+                  console.log(results[0].idclassroom); 
+                  idclassroom = results[0].idclassroom;
+      
+                  return callback(results[0].idclassroom);
+                 }) }
+      
+      
+        var idclassroom = '';
+        get_info( function(result){
+            idclassroom = result;
+           
+            connection.query("INSERT INTO reservations (matricula,date,starting_time,ending_time,idclassroom) VALUES(?,?,?,?,?)", [matricula,date,time_s,time_e,idclassroom], function (error, results, fields) {
+            // If there is an issue with the query, output the error
+            if (error) throw error;
+            console.log(results) 
+            console.log("correct")
+            });
+
+
+    connection.query('SELECT * FROM reservations', function (error, results, fields) {
+        if (error) throw error;
+            console.log(results);
+
+           });
+}); };
+});
+
+
 
 app.listen(port, "0.0.0.0", () => {
     console.log("Server Started...")
