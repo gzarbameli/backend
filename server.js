@@ -68,17 +68,6 @@ app.get("/home", cors(), async (request, response) => {
     response.send("STRING FROM THE SERVER!!!");
 })
 
-app.post("/store-data", (request, response) => {
-    let body = '';
-    request.on('data', chunk => {
-        body += chunk.toString(); // convert Buffer to string
-    });
-    request.on('end', () => {
-        console.log(body);
-        response.end('ok');
-    });
-})
-
 app.post("/post_name", async (request, response) => {
     let { name } = request.body
     console.log(name)
