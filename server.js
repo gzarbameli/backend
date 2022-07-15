@@ -172,6 +172,16 @@ app.use('/book', (request, response) => {
 }); };
 });
 
+app.use(cors());
+
+app.use('/myreservations', (req, res) => {
+  connection.query('SELECT * FROM reservations WHERE matricula= ?', matricula, (err, results, fields) => {
+    if(err) throw err;
+    res.send(results);
+  });
+});
+
+
 
 
 app.listen(port, "0.0.0.0", () => {
