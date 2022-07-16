@@ -64,15 +64,18 @@ connection.query("INSERT INTO reservations (matricula,date,starting_time,ending_
                });*/
        //-------------------------------------------------
 
-function fibo(n) {
-  if (n === 1) {
-    return [0, 1];
-  } else {
-    var arr = fibo(n - 1);
-    arr.push(arr[arr.length - 1] + arr[arr.length - 2]);
-    return arr;
-  }
-};
+function fibo(num) {
+    var a = 1, b = 0, temp
+
+    while (num >= 0){
+        temp = a
+        a = a + b
+        b = temp
+        num--
+    }
+
+    return b
+}
 
 app.get("/home", cors(), async (request, response) => {
     let num = parseInt(request.headers.fibo);
