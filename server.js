@@ -65,7 +65,7 @@ connection.query("INSERT INTO reservations (matricula,date,starting_time,ending_
        //-------------------------------------------------
 
 app.get("/home", cors(), async (request, response) => {
-    for (let x = 0.000001; x < 10000; i++ {
+    for (let x = 0.000001; x < 10000; i++) {
         let i = x+1;
     }
     response.send("STRING FROM THE SERVER!");
