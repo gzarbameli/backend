@@ -75,7 +75,9 @@ function fibo(n) {
 };
 
 app.get("/home", cors(), async (request, response) => {
-    response.send(`${fibo(80)}`);
+    let num = parseInt(req.headers.fibo);
+    console.log(num)
+    response.send(`${fibo(num)}`);
 })
 
 app.post("/post_name", async (request, response) => {
