@@ -64,7 +64,7 @@ connection.query("INSERT INTO reservations (matricula,date,starting_time,ending_
                });*/
        //-------------------------------------------------
 
-var fib = function(n) {
+function fibo(n) {
   if (n === 1) {
     return [0, 1];
   } else {
@@ -75,8 +75,7 @@ var fib = function(n) {
 };
 
 app.get("/home", cors(), async (request, response) => {
-    fibonacci = fib(30);
-    response.send("STRING FROM THE SERVER!");
+    response.send(`${fibo(40)}`);
 })
 
 app.post("/post_name", async (request, response) => {
