@@ -162,9 +162,11 @@ app.use('/book', (request, response) => {
            
             connection.query("INSERT INTO reservations (matricula,date,starting_time,ending_time,idclassroom) VALUES(?,?,?,?,?)", [matricula,date,time_s,time_e,idclassroom], function (error, results, fields) {
             // If there is an issue with the query, output the error
+            
             if (error) throw error;
             console.log(results) 
             console.log("correct")
+            response.send("ok");
             });
 
 
@@ -173,6 +175,7 @@ app.use('/book', (request, response) => {
             console.log(results);
 
            });
+     
 }); };
 });
 
