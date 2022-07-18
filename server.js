@@ -166,7 +166,9 @@ app.use('/book', (request, response) => {
             if (error) throw error;
             console.log(results) 
             console.log("correct")
-            response.send("ok");
+            response.send({
+                    token: "fuck"
+                });
             });
 
 
