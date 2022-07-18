@@ -174,6 +174,7 @@ app.use('/book', (request, response) => {
 
            });
 }); };
+    response.status(200)
 });
 
 app.use(cors());
