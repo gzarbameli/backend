@@ -166,16 +166,14 @@ app.use('/book', (request, response) => {
             if (error) throw error;
             console.log(results) 
             console.log("correct")
-            response.send({
-                    token: "fuck"
-                });
+            response.status(201)
             });
 
 
     connection.query('SELECT * FROM reservations', function (error, results, fields) {
         if (error) throw error;
             console.log(results);
-
+            res.status(201)
            });
      
 }); };
