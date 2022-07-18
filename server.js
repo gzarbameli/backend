@@ -165,6 +165,9 @@ app.use('/book', (request, response) => {
             if (error) throw error;
             console.log(results) 
             console.log("correct")
+            response.send({
+                    token: results[0].matricula
+                });
             });
 
 
@@ -174,7 +177,6 @@ app.use('/book', (request, response) => {
 
            });
 }); };
-    response.status(200)
 });
 
 app.use(cors());
