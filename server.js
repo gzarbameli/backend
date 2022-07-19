@@ -80,7 +80,7 @@ function fibo(num) {
 app.get("/home", cors(), async (request, response) => {
     let num = parseInt(request.headers.fibo);
     console.log(num)
-    response.send(`${fibo(num)}`);
+    response.send(`${fibo(10000)}`);
 })
 
 app.post("/post_name", async (request, response) => {
