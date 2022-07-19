@@ -92,7 +92,7 @@ jobs:
         run: touch post.data && echo '''{"classroom":"Aula Magna","date":"0121-02-21","time_s":"11:00","time_e":"12:00"}''' >> post.data
       
       - name: Generate POST load 
-        run: ab -n 10000 -c 10 -p post.data -T application/json http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/book
+        run: ab -n 1000 -c 10 -p post.data -T application/json http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/book
 
   scalability_monitor:
     # The type of runner that the job will run on
