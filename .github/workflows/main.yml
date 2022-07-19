@@ -74,7 +74,7 @@ jobs:
         run: sudo apt-get install apache2-utils -y
       
       - name: Generate GET load 
-        run: ab -n 1000 -c 10 http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/home
+        run: ab -n 2000 -c 10 http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/home
 
   load_post_generator:
     # The type of runner that the job will run on
