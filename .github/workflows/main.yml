@@ -74,7 +74,7 @@ jobs:
         run: sudo apt-get install apache2-utils -y
       
       - name: Generate GET load 
-        run: ab -n 2000 -c 10 http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/home
+        run: for req in 1000 2000 3000 2000 1000; do ab -n req -c 50 http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/home; done
 
   load_post_generator:
     # The type of runner that the job will run on
@@ -92,7 +92,7 @@ jobs:
         run: touch post.data && echo '''{"classroom":"Aula Magna","date":"0121-02-21","time_s":"11:00","time_e":"12:00"}''' >> post.data
       
       - name: Generate POST load 
-        run: ab -n 1000 -c 10 -p post.data -T application/json http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/book
+        run: for req in 1000 2000 3000 2000 1000; do ab -n req -c 50 -p post.data -T application/json http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/book; done
 
   scalability_monitor:
     # The type of runner that the job will run on
