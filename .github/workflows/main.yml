@@ -61,3 +61,50 @@ jobs:
              exit
              EOF
   
+  load_get_generator:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: build
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Install Requirements
+        run: sudo apt-get install apache2-utils -y
+      
+      - name: Generate GET load 
+        run: ab -n 1000 -c 10 http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/home
+
+  load_post_generator:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: build
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Install Requirements
+        run: sudo apt-get install apache2-utils -y
+      
+      - name: Create POST data
+        run: touch post.data && echo '''{"classroom":"Aula Magna","date":"0121-02-21","time_s":"11:00","time_e":"12:00"}''' >> post.data
+      
+      - name: Generate POST load 
+        run: ab -n 10000 -c 10 -p post.data -T application/json http://ec2-44-205-128-120.compute-1.amazonaws.com:30001/book
+
+  scalability_monitor:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: build
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: SSH 
+        run: |
+             ssh -oStrictHostKeyChecking=no -i labsuser.pem ubuntu@44.205.128.120 <<- 'EOF'
+             kubectl get hpa backend-deployment -w
+             EOF
